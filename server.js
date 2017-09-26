@@ -37,16 +37,3 @@ app.use('/api', spoofItemRoute);
 
 
 app.listen(3000);
-
-
-
-//Adding Data Manually to DB
-// const SpoofItem     = require('./api/models/spoofitem');
-// const spoofItem = new SpoofItem({
-//   'title': 'Spoofer Title 3',
-//   'img': 'https://scontent.forf1-2.fna.fbcdn.net/v/t31.0-8/16252166_10158670472275131_2340890356782076580_o.jpg?oh=dd161e0cf4dd9742dc626316d1f363e3&oe=5A3FD9C2',
-//   'desc': 'Kogi pop-up hashtag fam prism. Try-hard letterpress single-origin coffee cliche keytar. Subway tile waistcoat meditation mumblecore cliche.'
-// });
-// spoofItem.save((err) => {
-//   console.log(err, 'saved')
-// })
