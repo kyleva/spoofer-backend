@@ -16,11 +16,9 @@ router.post('/', (req, res) => {
     const spoofer = new SpoofItem({ title, desc, img });
     console.log(`Spoof Item: ${spoofer} ${spoofer.title} - ${spoofer.desc} - ${spoofer.img}` );
 
-    spoofer.save(req.body, (err, result) => {
+    spoofer.save((err) => {
       if (err) return console.log(err)
-
       console.log('saved to database');
-      
       res.send('you\'re item has been saved');
     })
 
