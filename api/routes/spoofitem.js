@@ -16,12 +16,17 @@ router.get('/', function(req, res) {
 
 //show all posts
 router.get('/posts', (req, res) => {
-	SpoofItem.find()
-  .then((spoof) => {
-  	// res = response
-    // set status to 200 (not actually necessary but good practice)
-    // send json object w/ spoof grabbed from db
-    res.status(200).json(spoof)
+  // const mongoose = require('mongoose')
+  // const start = mongoose.connect('mongodb://localhost:27017/ogspoofer', {
+  //   useMongoClient: true
+  // })
+  // .then((db) => {
+  //   SpoofItem.find({}, function(spoofItems){
+  //     res.status(200).json(spoofItems)
+  //   })
+  // })
+  SpoofItem.find().then((spoofItems) => {
+    res.status(200).json(spoofItems)
   })
 })
 
