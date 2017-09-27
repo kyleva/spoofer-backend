@@ -14,9 +14,13 @@ const SpoofItemController = module.exports = {
         })
     },
     detail: (req, res) => {
-        const name = req.params.name;
+        const {title, desc, img, name} = req.params;
         SpoofItem.findOne({name: name}).then((spoofItems) => {
-            res.status(200).json(spoofItems)
+            res.status(200).json({
+                title: spoofItems.title,
+                desc: spoofItems.desc,
+                img: spoofItems.img
+            })
         })
     },
     list: (req, res) => {
