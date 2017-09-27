@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const SpoofItem = require('../models/spoofitem');
 
+const SpoofController = require('../controllers/spoofer');
+
 // middleware to use for api requests
 router.use(function(req, res, next) {
   // do logging
@@ -15,19 +17,9 @@ router.get('/', function(req, res) {
 });
 
 //show all posts
-router.get('/posts', (req, res) => {
-  // const mongoose = require('mongoose')
-  // const start = mongoose.connect('mongodb://localhost:27017/ogspoofer', {
-  //   useMongoClient: true
-  // })
-  // .then((db) => {
-  //   SpoofItem.find({}, function(spoofItems){
-  //     res.status(200).json(spoofItems)
-  //   })
-  // })
-  SpoofItem.find().then((spoofItems) => {
-    res.status(200).json(spoofItems)
-  })
-})
+router.get('/posts', SpoofController.list);
+
+//single spoof item
+//router.get('/posts/:name', SpoofController.detail);
 
 module.exports = router;

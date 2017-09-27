@@ -10,7 +10,17 @@ const SpoofItemController = module.exports = {
         spoofer.save((err) => {
             if (err) return console.log(err)
             console.log('saved to database');
-            res.send('you\'re item has been saved');
+            res.json(spoofer);
+        })
+    },
+    detail: (req, res) => {
+        SpoofItem.find().then((spoofItems) => {
+            res.status(200).json(spoofItems)
+        })
+    },
+    list: (req, res) => {
+        SpoofItem.find().then((spoofItems) => {
+          res.status(200).json(spoofItems)
         })
     }
 }
