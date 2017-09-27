@@ -15,6 +15,7 @@
     "body-parser": "^1.18.2",
     "express": "^4.15.5",
     "mongo": "^0.1.0",
-    "mongoose": "^4.11.13"
+    "mongoose": "^4.11.13",
+    "randomstring": "^1.1.5"
   }
 }
