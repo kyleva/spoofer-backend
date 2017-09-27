@@ -27,4 +27,7 @@ router.get('/', (req, res) => {
 
 router.post('/', SpoofController.create);
 
+//single spoof item
+router.get('/:name', SpoofController.detail);
+
 module.exports = router;

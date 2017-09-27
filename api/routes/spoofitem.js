@@ -1,7 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const SpoofItem = require('../models/spoofitem');
-
 const SpoofController = require('../controllers/spoofer');
 
 // middleware to use for api requests
@@ -18,8 +16,5 @@ router.get('/', function(req, res) {
 
 //show all posts
 router.get('/posts', SpoofController.list);
-
-//single spoof item
-//router.get('/posts/:name', SpoofController.detail);
 
 module.exports = router;
