@@ -1,0 +1,1 @@
+const SpoofItem = require('../models/spoofitem');

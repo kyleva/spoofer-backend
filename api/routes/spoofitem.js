@@ -9,12 +9,18 @@ router.use(function(req, res, next) {
   next(); // make sure we go to the next routes and don't stop here
 });
 
-
+//default API message
 router.get('/', function(req, res) {
   res.json({ message: 'hooray! welcome to our api!' }); 
 });
 
 //show all posts
 router.get('/posts', SpoofController.list);
+
+//Create Posts
+router.post('/posts', SpoofController.create);
+
+//single spoof item
+router.get('/posts/:name', SpoofController.detail);
 
 module.exports = router;
