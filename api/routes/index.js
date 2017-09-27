@@ -14,10 +14,18 @@ router.get('/', (req, res) => {
 
 //render html template when viewing root/:name
 router.get('/:name', (req, res) => {
-  const name = req.params.name;
-  SpoofItem.findOne({name: name}).then((spoofItems) => {
-    res.status(200).render('post')
-  }) 
+  const {title, desc, img, name} = req.params;
+  SpoofItem.findOne({name: name})
+  .then((spoofItems) => {
+    res.status(200).render('post', {
+      title: spoofItems.title,
+      desc: spoofItems.desc,
+      img: spoofItems.img
+    })
+  })
+  .catch(error => {
+    res.send('Who did the emo wook, whata wow!?', error)
+  });
 });
 
 //create route to display name link
