@@ -30,5 +30,10 @@ const spoofItemRoute = require('./api/routes/spoofitem');
 app.use('/api', spoofItemRoute);
 app.use('/', index);
 
+// VIEWS
+// =============================================================================
+app.set('views', __dirname + '/api/views');
+app.set('view engine', 'ejs');
+
 
 app.listen(3000);

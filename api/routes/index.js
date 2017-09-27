@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-//const SpoofItem = require('../models/spoofitem');
-const SpoofController = require('../controllers/spoofer');
+const SpoofItem = require('../models/spoofitem');
+//const SpoofController = require('../controllers/spoofer');
 
 router.use(function(req, res, next) {
   console.log('Something is happening on index');
@@ -14,7 +14,10 @@ router.get('/', (req, res) => {
 
 //render html template when viewing root/:name
 router.get('/:name', (req, res) => {
-  res.send('This will be info about a single post')
+  const name = req.params.name;
+  SpoofItem.findOne({name: name}).then((spoofItems) => {
+    res.status(200).render('post')
+  }) 
 });
 
 //create route to display name link
