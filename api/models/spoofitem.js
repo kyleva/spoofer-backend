@@ -9,5 +9,4 @@ const SpoofItemSchema = mongoose.Schema({
     //places_id: {type: Date, default: Date.now}
 });
 
-
 module.exports = mongoose.model('SpoofItem', SpoofItemSchema);

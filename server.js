@@ -3,6 +3,10 @@ bodyParser = require('body-parser'),
 app     = express(),
 router = express.Router();
 
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
+
 // configure app to use bodyParser()
 // this will let us get the data from a POS
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -10,8 +14,7 @@ app.use(bodyParser.json());
 
 // CONNECT TO DATABASE -------------------------------
 var mongoose = require('mongoose');
-var mongoDB = 'mongodb://localhost/spooferTest';
-mongoose.connect(mongoDB, {
+mongoose.connect(process.env.DATABASE_URL, {
 useMongoClient: true
 });
 var db = mongoose.connection;
@@ -28,12 +31,11 @@ const spoofItemRoute = require('./api/routes/spoofitem');
 
 // REGISTER OUR ROUTES -------------------------------
 app.use('/api', spoofItemRoute);
-app.use('/', index);
+app.use('/', index(app));
 
 // VIEWS
 // =============================================================================
 app.set('views', __dirname + '/api/views');
 app.set('view engine', 'ejs');
-
 
 app.listen(3000);
