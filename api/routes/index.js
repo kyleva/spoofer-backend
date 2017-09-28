@@ -19,7 +19,12 @@ module.exports = (app) => {
     });
   });
 
-  app.use('/', proxy({ target: process.env.FRONTEND_URL, changeOrigin: true }));
+  // Ran into some issues -- commenting out for now
+  // app.use('/[^a-zA-Z]', proxy({
+  //   target: process.env.FRONTEND_URL,
+  //   changeOrigin: true,
+  //   strict: false
+  // }));
 
   return router;
 }
