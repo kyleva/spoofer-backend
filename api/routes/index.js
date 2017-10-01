@@ -2,29 +2,20 @@ const express = require('express');
 const router = express.Router();
 const SpoofItem = require('../models/spoofitem');
 const proxy = require('http-proxy-middleware');
+const IndexController = require('../controllers/index');
 
-module.exports = (app) => {
-  router.get('/:name', (req, res) => {
-    const {title, desc, img, name} = req.params;
-    SpoofItem.findOne({name: name})
-    .then((spoofItems) => {
-      res.status(200).render('post', {
-        title: spoofItems.title,
-        desc: spoofItems.desc,
-        img: spoofItems.img
-      })
-    })
-    .catch(error => {
-      res.status(200).json({ error })
-    });
+
+// middleware to use for api requests
+router.use(function(req, res, next) {
+    // do logging
+    console.log('Something is happening on index!');
+    next(); // make sure we go to the next routes and don't stop here
   });
+  
 
-  // Ran into some issues -- commenting out for now
-  // app.use('/[^a-zA-Z]', proxy({
-  //   target: process.env.FRONTEND_URL,
-  //   changeOrigin: true,
-  //   strict: false
-  // }));
+router.get('/:name', IndexController.detail);
 
-  return router;
-}
+router.get('/', IndexController.home);
+
+
+module.exports = router;

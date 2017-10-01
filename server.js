@@ -31,7 +31,7 @@ const spoofItemRoute = require('./api/routes/spoofitem');
 
 // REGISTER OUR ROUTES -------------------------------
 app.use('/api', spoofItemRoute);
-app.use('/', index(app));
+app.use('/', index);
 
 // VIEWS
 // =============================================================================
