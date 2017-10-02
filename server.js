@@ -33,9 +33,13 @@ const spoofItemRoute = require('./api/routes/spoofitem');
 // REGISTER OUR ROUTES -------------------------------
 
 //set up cross orgin resource sharing 
-app.use(cors())
 
-app.use('/api', spoofItemRoute);
+const corsOptions = {
+  origin: process.env.ORGIN_URL,
+  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204 
+}
+
+app.use('/api', cors(corsOptions), spoofItemRoute);
 app.use('/', index);
 
 // VIEWS
