@@ -1,5 +1,6 @@
 const express = require('express'),
 bodyParser = require('body-parser'),
+cors = require('cors'),
 app     = express(),
 router = express.Router();
 
@@ -30,6 +31,10 @@ const spoofItemRoute = require('./api/routes/spoofitem');
 
 
 // REGISTER OUR ROUTES -------------------------------
+
+//set up cross orgin resource sharing 
+app.use(cors())
+
 app.use('/api', spoofItemRoute);
 app.use('/', index);
 
