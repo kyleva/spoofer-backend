@@ -6,8 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "concurrently \"mongod\" \"nodemon server.js\"",
-    "db:seed": "node seed",
-    "start": "node server.js"
+    "db:seed": "node seed"
   },
   "author": "Branden Builds",
   "license": "ISC",
