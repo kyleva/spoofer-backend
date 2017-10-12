@@ -15,7 +15,7 @@ app.use(bodyParser.json());
 
 // CONNECT TO DATABASE -------------------------------
 var mongoose = require("mongoose");
-mongoose.connect(process.env.DATABASE_URL, {
+mongoose.connect(process.env.MONGODB_URI, {
   useMongoClient: true
 });
 var db = mongoose.connection;
