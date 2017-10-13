@@ -1,17 +1,19 @@
 const SpoofItem = require("../models/spoofitem");
-const randomstring = require("randomstring");
+const base52 = require('./../algo/base52');
 
 const SpoofItemController = (module.exports = {
   create: (req, res) => {
-    let name = randomstring.generate({ length: 8, charset: "alphabetic" });
+    let shortUrl = '';
     const { title, desc, img } = req.body;
-    const spoofer = new SpoofItem({ title, desc, img, name });
+    const spoofer = new SpoofItem({ title, desc, img});
 
     spoofer.save((err, spoofItem) => {
-      if (err) return console.log(err);
+      if (err) return console.log(`this is your error ${err}`);
+      shortUrl = process.env.ROOT_URL + base52.encode(spoofer._id);
+      // res.json(spoofItem);
+      res.send({'shortUrl': shortUrl});
+    })
 
-      res.json(spoofItem);
-    });
   },
   detail: (req, res) => {
     const { title, desc, img, name } = req.params;
