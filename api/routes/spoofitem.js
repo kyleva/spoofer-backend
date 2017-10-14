@@ -21,6 +21,6 @@ router.get('/posts', SpoofController.list);
 router.post('/posts', SpoofController.create);
 
 //single spoof item
-router.get('/posts/:name', SpoofController.detail);
+router.get('/posts/:encoded_id', SpoofController.detail);
 
 module.exports = router;

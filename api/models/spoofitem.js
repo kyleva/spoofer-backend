@@ -12,7 +12,8 @@ const SpoofItemSchema = mongoose.Schema({
     _id: {type: Number, index: true},
 	title: {type: String, required: true,  trim: true, minlength: 1,},
     desc: {type: String, required: true, max: 300,  trim: true, minlength: 1,},
-    img: {type: String, required: true}
+    img: {type: String, required: true},
+    created_at: Date
 });
 
 SpoofItemSchema.pre('save', function(next){
@@ -24,7 +25,6 @@ SpoofItemSchema.pre('save', function(next){
             console.log('error in pre save');
             return next(error);
         }
-           
         // set the _id of the urls collection to the incremented value of the counter
         doc._id = counter.seq;
         doc.created_at = new Date();
