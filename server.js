@@ -35,7 +35,6 @@ db.on("error", console.error.bind(console, "MongoDB connection error:"));
 // POPULATE DB W/ COUNTER COLLECTION
 // =============================================================================
 Counter.findOne({}, (err, result) => {
-  console.log("did it find one?");
   console.log(err, result);
   if (result == null) {
     const counter = new Counter({
