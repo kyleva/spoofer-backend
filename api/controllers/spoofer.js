@@ -1,27 +1,29 @@
 const SpoofItem = require("../models/spoofitem");
-const randomstring = require("randomstring");
+const base52 = require("./../algo/base52");
+const counter = require("./../models/counter");
 
 const SpoofItemController = (module.exports = {
   create: (req, res) => {
-    let name = randomstring.generate({ length: 8, charset: "alphabetic" });
     const { title, desc, img } = req.body;
-    const spoofer = new SpoofItem({ title, desc, img, name });
-
+    const spoofer = new SpoofItem({ title, desc, img });
     spoofer.save((err, spoofItem) => {
-      if (err) return console.log(err);
+      if (err) return console.log(`this is your error ${err}`);
+      const name = base52.encode(spoofer._id);
 
-      res.json(spoofItem);
-    });
-  },
-    const spoofer = new SpoofItem({ title, desc, img, name });
-    spoofer.save((err, spoofItem) => {
-      if (err) return console.log(err);
-      res.json(spoofItem);
+      res.status(200).json({
+        title: spoofItem.title,
+        desc: spoofItem.desc,
+        img: spoofItem.img,
+        name: name
+      });
     });
   },
   detail: (req, res) => {
-    const { title, desc, img, name } = req.params;
-    SpoofItem.findOne({ name: name }).then(spoofItems => {
+    const { title, desc, img } = req.params;
+    const base52Id = req.params.encoded_id;
+    const id = base52.decode(base52Id);
+
+    SpoofItem.findOne({ _id: id }).then(spoofItems => {
       res.status(200).json({
         title: spoofItems.title,
         desc: spoofItems.desc,

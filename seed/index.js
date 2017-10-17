@@ -1,7 +1,6 @@
 require("dotenv").config();
 
 const SpoofItem = require("./../api/models/spoofitem");
-const randomstring = require("randomstring");
 const mongoose = require("mongoose");
 mongoose.connect(process.env.MONGODB_URI, {
   useMongoClient: true
@@ -33,7 +32,7 @@ const getRandomNumber = (num1, num2) => Math.floor(Math.random() * num2) + num1;
 const imageSize = getRandomNumber(200, 400);
 
 for (let i = 0; i < count; i++) {
-  let name = randomstring.generate({ length: 8, charset: "alphabetic" });
+  //let name = randomstring.generate({ length: 8, charset: "alphabetic" });
   let spoofItem = new SpoofItem({
     desc: getRandomFromArray(descriptions),
     img: `http://unsplash.it/${imageSize}/${imageSize}`,
