@@ -16,7 +16,7 @@ SpoofItemSchema.pre("save", function(next) {
   counter.findByIdAndUpdate(
     { _id: "url_count" },
     { $inc: { seq: 1 } },
-    function(error, counter) {
+    (error, counter) => {
       if (error) {
         console.log("error in pre save")
         return next(error)

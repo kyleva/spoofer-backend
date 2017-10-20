@@ -6,6 +6,4 @@ const CounterSchema = Schema({
   seq: { type: Number, default: 0 }
 })
 
-const CounterModel = mongoose.model("counter", CounterSchema)
-
-module.exports = CounterModel
+module.exports  = mongoose.model("counter", CounterSchema)
