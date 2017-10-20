@@ -4,11 +4,10 @@ const express = require("express"),
   app = express(),
   router = express.Router(),
   RateLimit = require("express-rate-limit"),
-  Counter = require("./api/models/counter")
+  Counter = require("./api/models/counter"),
+  //config
+  {mongoose} = require('./config/mongoose')
 
-if (process.env.NODE_ENV !== "production") {
-  require("dotenv").config()
-}
 
 //rate limiting
 app.enable("trust proxy") // only if you're behind a reverse proxy (Heroku, Bluemix, AWS if you use an ELB, custom Nginx setup, etc)
@@ -23,14 +22,6 @@ app.use("/api/", apiLimiter)
 // this will let us get the data from a POS
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
-
-// CONNECT TO DATABASE -------------------------------
-const mongoose = require("mongoose")
-mongoose.connect(process.env.MONGODB_URI, {
-  useMongoClient: true
-})
-const db = mongoose.connection
-db.on("error", console.error.bind(console, "MongoDB connection error:"))
 
 // POPULATE DB W/ COUNTER COLLECTION
 // =============================================================================

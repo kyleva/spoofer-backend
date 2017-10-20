@@ -9,7 +9,6 @@ const create = (req, res) => {
   spoofer.save((err, spoofItem) => {
     if (err) return console.log(`this is your error ${err}`)
     const name = base52.encode(spoofer._id)
-
     res.status(200).json({
       title: spoofItem.title,
       desc: spoofItem.desc,
