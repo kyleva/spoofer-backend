@@ -1,12 +1,11 @@
-const express = require("express"),
-  bodyParser = require("body-parser"),
-  cors = require("cors"),
-  app = express(),
-  router = express.Router(),
-  RateLimit = require("express-rate-limit"),
-  Counter = require("./api/models/counter"),
-  //config
-  {mongoose} = require('./config/mongoose')
+const express = require("express")
+const bodyParser = require("body-parser")
+const cors = require("cors")
+const app = express()
+const router = express.Router()
+const RateLimit = require("express-rate-limit")
+const Counter = require("./api/models/counter")
+const {mongoose} = require('./config/mongoose')
 
 
 //rate limiting
