@@ -1,12 +1,24 @@
 require("dotenv").config()
 
 const SpoofItem = require("./../api/models/spoofitem")
-const mongoose = require("mongoose")
-mongoose.connect(process.env.MONGODB_URI, {
-  useMongoClient: true
+const {mongoose} = require('./../config/mongoose')
+const Counter = require("./../api/models/counter")
+
+
+//Clear Collections to start new + add counter
+SpoofItem.remove({}).then((result) => {
+  console.log('spoof items cleared')
 })
-const db = mongoose.connection
-db.on("error", console.error.bind(console, "MongoDB connection error:"))
+
+Counter.remove({}).then((result) => {
+  console.log('counters cleared')
+})
+
+const counter = new Counter({
+  _id: "url_count",
+  seq: 10000
+}).save()
+
 
 const img = "https//unsplash.it/200/200"
 const titles = [
@@ -36,10 +48,8 @@ for (let i = 0; i < count; i++) {
   let spoofItem = new SpoofItem({
     desc: getRandomFromArray(descriptions),
     img: `http://unsplash.it/${imageSize}/${imageSize}`,
-    name,
-    title: getRandomFromArray(titles)
+    title: getRandomFromArray(titles),
   })
-
   spoofItem.save(() => {}).catch(err => console.log(err))
 }
 
