@@ -13,7 +13,7 @@ if (process.env.NODE_ENV !== "production") {
 //rate limiting
 app.enable("trust proxy") // only if you're behind a reverse proxy (Heroku, Bluemix, AWS if you use an ELB, custom Nginx setup, etc)
 const apiLimiter = new RateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
+  windowMs: 2 * 60 * 1000, // 15 minutes
   max: 100, // limit each IP to 100 requests per windowMs
   delayMs: 0 // disable delaying - full speed until the max limit is reached
 })
@@ -25,11 +25,11 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 
 // CONNECT TO DATABASE -------------------------------
-var mongoose = require("mongoose")
+const mongoose = require("mongoose")
 mongoose.connect(process.env.MONGODB_URI, {
   useMongoClient: true
 })
-var db = mongoose.connection
+const db = mongoose.connection
 db.on("error", console.error.bind(console, "MongoDB connection error:"))
 
 // POPULATE DB W/ COUNTER COLLECTION
