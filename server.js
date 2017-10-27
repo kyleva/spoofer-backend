@@ -1,12 +1,14 @@
 const express = require("express")
 const bodyParser = require("body-parser")
 const cors = require("cors")
-const app = express()
 const router = express.Router()
 const RateLimit = require("express-rate-limit")
 const Counter = require("./api/models/counter")
 const {mongoose} = require('./config/mongoose')
 
+const app = express()
+
+app.use(helmet())
 
 //rate limiting
 app.enable("trust proxy") // only if you're behind a reverse proxy (Heroku, Bluemix, AWS if you use an ELB, custom Nginx setup, etc)
