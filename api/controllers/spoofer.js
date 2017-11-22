@@ -1,11 +1,12 @@
 const SpoofItem = require("../models/spoofitem")
 const base52 = require("./../algo/base52")
 const counter = require("./../models/counter")
-
+const sanitize = require('mongo-sanitize')
 
 const create = (req, res) => {
-  const { title, desc, img } = req.body
+  const { title, desc, img } = sanitize(req.body)
   const spoofer = new SpoofItem({ title, desc, img })
+  
   spoofer.save((err, spoofItem) => {
     if (err) return console.log(`this is your error ${err}`)
     const name = base52.encode(spoofer._id)
