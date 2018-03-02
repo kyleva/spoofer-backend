@@ -22,11 +22,15 @@ bootstrapCounter()
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 
+// CORZ
+setupCors(app)
+
 // ROUTES FOR OUR API
 app.use('/', routes)
 
-// CORZ
-setupCors(app)
+// VIEWZ
+app.set('views', __dirname + '/app/views')
+app.set('view engine', 'ejs')
 
 // START DA APP
 app.listen(process.env.PORT || 3000)

@@ -27,22 +27,17 @@ export function getSingleSpoofItem(req, res, next) {
   const base52Id = req.params.encoded_id
   const id = decode(base52Id)
 
-  console.log(req.params)
-  console.log(id)
-
-  SpoofItem.findOne({ _id: id }).then(spoofItem => {
-    console.log(spoofItem)
-    res
-      .status(200)
-      .json({
+  SpoofItem.findOne({ _id: id })
+    .then(spoofItem => {
+      res.status(200).json({
         title: spoofItem.title,
         desc: spoofItem.desc,
         img: spoofItem.img
       })
-      .catch(err => {
-        res.send(err)
-      })
-  })
+    })
+    .catch(err => {
+      res.send(err)
+    })
 }
 
 export function getAllSpoofItems(req, res, next) {
@@ -54,4 +49,17 @@ export function getAllSpoofItems(req, res, next) {
       console.log(`Error in 'getAllSpoofItems' method: ${err}`)
       next()
     })
+}
+
+export function viewSpoofItem(req, res, next) {
+  const base52Id = req.params.encoded_id
+  const id = decode(base52Id)
+
+  SpoofItem.findOne({ _id: id }).then(spoofItem => {
+    res.status(200).render('spoof-item', {
+      title: spoofItem.title,
+      desc: spoofItem.desc,
+      img: spoofItem.img
+    })
+  })
 }
