@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
-const counter = require('./../counter/counter-model')
+
+import Counter from './../counter/counter-model'
 
 const SpoofItemSchema = mongoose.Schema({
   _id: { type: Number, index: true },
@@ -13,17 +14,13 @@ const SpoofItemSchema = mongoose.Schema({
 
 SpoofItemSchema.pre('save', function(next) {
   var doc = this
-  // find the url_count and increment it by 1
-  counter.findByIdAndUpdate({ _id: 'url_count' }, { $inc: { seq: 1 } }, (error, counter) => {
-    if (error) {
-      console.log('error in pre save')
-      return next(error)
-    }
-    // set the _id of the urls collection to the incremented value of the counter
-    doc._id = counter.seq
-    doc.created_at = new Date()
-    next()
-  })
+  Counter.findByIdAndUpdate({ _id: 'url_count' }, { $inc: { seq: 1 } })
+    .then(counter => {
+      doc._id = counter.seq
+      doc.created_at = new Date()
+      next()
+    })
+    .catch(err => next(error))
 })
 
 module.exports = mongoose.model('SpoofItem', SpoofItemSchema)
