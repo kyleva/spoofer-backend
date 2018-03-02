@@ -1,65 +1,32 @@
-const express = require("express")
-const bodyParser = require("body-parser")
-const cors = require("cors")
-const helmet = require("helmet")
-const RateLimit = require("express-rate-limit")
+import express from 'express'
+import * as bodyParser from 'body-parser'
+import * as helmet from 'helmet'
 
-const Counter = require("./api/models/counter")
-const {mongoose} = require('./config/mongoose')
+import { bootstrap as bootstrapCounter } from './app/counter/counter-controller'
+import { setupCors } from './app/routes/cors'
+import { routes } from './app/routes'
 
-const router = express.Router()
+// SETUP DB
+import './config/mongoose'
+
+// INIT APP
 const app = express()
 
-app.use(helmet())
+// SETUP BASIC HTTP HEADER PROTECTIONS
+app.use(helmet.default())
 
-//rate limiting
-app.enable("trust proxy") // only if you're behind a reverse proxy (Heroku, Bluemix, AWS if you use an ELB, custom Nginx setup, etc)
-const apiLimiter = new RateLimit({
-  windowMs: 2 * 60 * 1000, // 15 minutes
-  max: 100, // limit each IP to 100 requests per windowMs
-  delayMs: 0 // disable delaying - full speed until the max limit is reached
-})
-app.use("/api/", apiLimiter)
+// BOOTSTRAP PROJECT
+bootstrapCounter()
 
-// configure app to use bodyParser()
-// this will let us get the data from a POS
+// CONFIGURE BODY PARSER
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 
-// POPULATE DB W/ COUNTER COLLECTION
-// =============================================================================
-Counter.findOne({}, (err, result) => {
-  console.log(err, result)
-  if (result == null) {
-    const counter = new Counter({
-      _id: "url_count",
-      seq: 10000
-    }).save()
-  }
-})
-
 // ROUTES FOR OUR API
-// =============================================================================
+app.use('/', routes)
 
-// BRING IN OUR ROUTES -------------------------------
-const index = require("./api/routes/index")
-const spoofItemRoute = require("./api/routes/spoofitem")
+// CORZ
+setupCors(app)
 
-// REGISTER OUR ROUTES -------------------------------
-
-//set up cross orgin resource sharing
-
-const corsOptions = {
-  origin: process.env.ORIGIN_URL,
-  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
-}
-
-app.use("/api", cors(corsOptions), spoofItemRoute)
-app.use("/", index)
-
-// VIEWS
-// =============================================================================
-app.set("views", __dirname + "/api/views")
-app.set("view engine", "ejs")
-
+// START DA APP
 app.listen(process.env.PORT || 3000)
