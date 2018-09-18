@@ -1,7 +1,7 @@
 const alphabet = 'abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ'
 const base = alphabet.length
 
-export function encode(num) {
+const encode = num => {
   let encoded = ''
   while (num) {
     const remainder = num % base
@@ -11,7 +11,7 @@ export function encode(num) {
   return encoded
 }
 
-export function decode(str) {
+const decode = str => {
   let decoded = 0
   while (str) {
     const index = alphabet.indexOf(str[0])
@@ -20,4 +20,9 @@ export function decode(str) {
     str = str.substring(1)
   }
   return decoded
+}
+
+module.exports = {
+  encode,
+  decode
 }

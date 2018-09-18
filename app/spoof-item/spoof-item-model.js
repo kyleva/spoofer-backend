@@ -1,10 +1,8 @@
 const mongoose = require('mongoose')
-const Schema = mongoose.Schema
 
-import Counter from './../counter/counter-model'
+const Counter = require('./../counter/counter-model')
 
 const SpoofItemSchema = mongoose.Schema({
-  _id: { type: Number, index: true },
   title: { type: String, required: true, trim: true, minlength: 1 },
   desc: { type: String, required: true, max: 300, trim: true, minlength: 1 },
   img: { type: String, required: true },

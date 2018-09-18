@@ -1,6 +1,6 @@
-import Counter from './counter-model'
+const Counter = require('./counter-model')
 
-export function bootstrap() {
+const bootstrap = () => {
   Counter.findOne({}, (err, result) => {
     if (result == null) {
       const counter = new Counter({
@@ -10,3 +10,5 @@ export function bootstrap() {
     }
   })
 }
+
+module.exports = bootstrap

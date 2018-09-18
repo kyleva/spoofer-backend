@@ -1,19 +1,19 @@
-import express from 'express'
-import * as bodyParser from 'body-parser'
-import * as helmet from 'helmet'
+const express = require('express')
+const bodyParser = require('body-parser')
+const helmet = require('helmet')
 
-import { bootstrap as bootstrapCounter } from './app/counter/counter-controller'
-import { setupCors } from './app/routes/cors'
-import { routes } from './app/routes'
+const bootstrapCounter = require('./app/counter/counter-controller')
+const setupCors = require('./app/routes/cors')
+const routes = require('./app/routes')
 
 // SETUP DB
-import './config/mongoose'
+require('./config/mongoose')
 
 // INIT APP
 const app = express()
 
 // SETUP BASIC HTTP HEADER PROTECTIONS
-app.use(helmet.default())
+app.use(helmet())
 
 // BOOTSTRAP PROJECT
 bootstrapCounter()

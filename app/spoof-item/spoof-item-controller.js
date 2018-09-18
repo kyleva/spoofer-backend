@@ -1,18 +1,15 @@
-import sanitize from 'mongo-sanitize'
-
-// import SpoofItem from './spoof-item-model'
-import Counter from './../counter/counter-model'
-import { decode, encode } from './../utility/index.js'
+const sanitize = require('mongo-sanitize')
 
 const SpoofItem = require('./spoof-item-model')
+const decode = require('./../utility/index.js').decode
+const encode = require('./../utility/index.js').encode
 
-export function createSpoofItem(req, res) {
+const createSpoofItem = (req, res) => {
   const { title, desc, img } = sanitize(req.body)
   const spoofItem = new SpoofItem({ title, desc, img })
 
   spoofItem.save((err, s) => {
     if (err) return console.log(`this is your error ${err}`)
-    console.log(s)
     const name = encode(s._id)
     res.status(200).json({
       title: s.title,
@@ -23,7 +20,7 @@ export function createSpoofItem(req, res) {
   })
 }
 
-export function getSingleSpoofItem(req, res, next) {
+const getSingleSpoofItem = (req, res, next) => {
   const base52Id = req.params.encoded_id
   const id = decode(base52Id)
 
@@ -40,7 +37,7 @@ export function getSingleSpoofItem(req, res, next) {
     })
 }
 
-export function getAllSpoofItems(req, res, next) {
+const getAllSpoofItems = (req, res, next) => {
   SpoofItem.find()
     .then(spoofItems => {
       res.status(200).json(spoofItems)
@@ -51,7 +48,7 @@ export function getAllSpoofItems(req, res, next) {
     })
 }
 
-export function viewSpoofItem(req, res, next) {
+const viewSpoofItem = (req, res, next) => {
   const base52Id = req.params.encoded_id
   const id = decode(base52Id)
 
@@ -62,4 +59,11 @@ export function viewSpoofItem(req, res, next) {
       img: spoofItem.img
     })
   })
+}
+
+module.exports = {
+  createSpoofItem,
+  getSingleSpoofItem,
+  getAllSpoofItems,
+  viewSpoofItem
 }

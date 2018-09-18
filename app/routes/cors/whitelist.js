@@ -1,1 +1,1 @@
-export default ['https://www.spfr.io']
+module.exports = ['https://www.spfr.io']

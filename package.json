@@ -1,11 +1,11 @@
 {
   "name": "spoofer-backend",
   "version": "1.0.0",
-  "description": "Sppofer backend using node, express, mongo",
+  "description": "Spoofer backend using node, express, mongo",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "concurrently \"nodemon server.js --exec babel-node --presets es2015,stage-2\" \"mongod\"",
+    "dev": "concurrently \"nodemon server.js --exec\" \"mongod\"",
     "db:seed": "node seed"
   },
   "contributors": [

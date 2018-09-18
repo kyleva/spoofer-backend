@@ -1,3 +1,7 @@
-import { decode, encode } from './base64'
+const decode = require('./base64').decode
+const encode = require('./base64').encode
 
-export { decode, encode }
+module.exports = {
+  decode,
+  encode
+}
